@@ -1,0 +1,5 @@
+{"ticket_id":"T-1001","opened_at":"2026-04-10T08:15:00+00:00","customer_id":"CUST-1201","channel":"email","category":"delivery_delay","priority":"high","status":"open"}
+{"ticket_id":"T-1002","opened_at":"2026-04-10T09:40:00+00:00","customer_id":"CUST-1202","channel":"chat","category":"refund","priority":"medium","status":"resolved"}
+{"ticket_id":"T-1003","opened_at":"2026-04-10T11:05:00+00:00","customer_id":"CUST-1203","channel":"phone","category":"payment_issue","priority":"critical","status":"open"}
+{"ticket_id":"T-1004","opened_at":"2026-04-10T13:20:00+00:00","customer_id":"CUST-1204","channel":"chat","category":"account_access","priority":"low","status":"resolved"}
+

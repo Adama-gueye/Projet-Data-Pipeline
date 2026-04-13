@@ -1,0 +1,7 @@
+snapshot_date,product_id,warehouse_code,stock_on_hand,reserved_stock,reorder_threshold
+2026-04-10,P-100,WH-DKR,42,10,20
+2026-04-10,P-101,WH-DKR,15,5,12
+2026-04-10,P-102,WH-DKR,180,22,45
+2026-04-10,P-103,WH-THI,24,8,18
+2026-04-10,P-104,WH-THI,11,4,12
+

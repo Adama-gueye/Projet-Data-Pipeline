@@ -1,0 +1,245 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.1",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "e238b38a90269aafc34e1825c3d78af6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"analytics-analyse-des-ventes-et-performance\">Analytics - Analyse des Ventes et Performance</h1>\n<span class=\"paragraph\">Ce notebook permet d'analyser les performances de vente et la qualite des donnees :</span>\n<ol>\n<li><strong>Resume des ventes</strong> par jour, categorie, methode de paiement</li>\n<li><strong>Surveillance des anomalies</strong> - Tendances et patterns</li>\n<li><strong>KPIs operationnels</strong> - Vue d'ensemble du pipeline</li>\n</ol>\n<h2 id=\"vues-analytiques\">Vues Analytiques</h2>\n<ul>\n<li><code>analytics.v_orders_summary</code> - Resume des commandes par dimension</li>\n<li><code>analytics.v_anomaly_monitoring</code> - Surveillance des anomalies</li>\n<li><code>analytics.daily_inventory_health</code> - Sante des stocks</li>\n<li><code>analytics.daily_support_kpis</code> - KPIs support client</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "068c96cacfd95af943d2c5c690551b89",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Connected to: postgres:5432/warehouse\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "ba3165bcf1a6176ce1f4ca587e2ead2d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"resume-des-ventes\">\ud83d\udcb0 Resume des Ventes</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "d51a676d041f390168a3aea9c34c3140",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"kpis-de-vente\">KPIs de Vente</h3>\n<ul>\n<li><strong>Revenu brut total</strong>: 381,099.77</li>\n<li><strong>Total commandes</strong>: 268</li>\n<li><strong>Taux d'anomalies</strong>: 11.94%</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "/tmp/marimo_15/__marimo__cell_vblA_.py:18: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.\n  df = pd.read_sql_query(sql, conn)\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "PKri",
+      "code_hash": "fe0d1ffde1810045ccb421e0ef7dd22d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='PKri-0' random-id='152daac0-169a-5964-9fd0-8cd7daa899fe'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;_marimo_row_id&#92;&quot;:0,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;electronics&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;mobile_money&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:56,&#92;&quot;gross_revenue&#92;&quot;:110015.5,&#92;&quot;anomalous_orders&#92;&quot;:9},{&#92;&quot;_marimo_row_id&#92;&quot;:1,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;electronics&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;card&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:38,&#92;&quot;gross_revenue&#92;&quot;:100471.23,&#92;&quot;anomalous_orders&#92;&quot;:6},{&#92;&quot;_marimo_row_id&#92;&quot;:2,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;electronics&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;paypal&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:42,&#92;&quot;gross_revenue&#92;&quot;:66769.93,&#92;&quot;anomalous_orders&#92;&quot;:5},{&#92;&quot;_marimo_row_id&#92;&quot;:3,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;electronics&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;bank_transfer&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:33,&#92;&quot;gross_revenue&#92;&quot;:57203.36,&#92;&quot;anomalous_orders&#92;&quot;:4},{&#92;&quot;_marimo_row_id&#92;&quot;:4,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;furniture&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;bank_transfer&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:15,&#92;&quot;gross_revenue&#92;&quot;:14108.82,&#92;&quot;anomalous_orders&#92;&quot;:2},{&#92;&quot;_marimo_row_id&#92;&quot;:5,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;furniture&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;card&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:15,&#92;&quot;gross_revenue&#92;&quot;:9756.04,&#92;&quot;anomalous_orders&#92;&quot;:1},{&#92;&quot;_marimo_row_id&#92;&quot;:6,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;furniture&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;mobile_money&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:13,&#92;&quot;gross_revenue&#92;&quot;:6085.36,&#92;&quot;anomalous_orders&#92;&quot;:0},{&#92;&quot;_marimo_row_id&#92;&quot;:7,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;furniture&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;paypal&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:9,&#92;&quot;gross_revenue&#92;&quot;:4227.19,&#92;&quot;anomalous_orders&#92;&quot;:0},{&#92;&quot;_marimo_row_id&#92;&quot;:8,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;home&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;card&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:13,&#92;&quot;gross_revenue&#92;&quot;:3733.07,&#92;&quot;anomalous_orders&#92;&quot;:1},{&#92;&quot;_marimo_row_id&#92;&quot;:9,&#92;&quot;order_day&#92;&quot;:&#92;&quot;2026-04-13 00:00:00+00:00&#92;&quot;,&#92;&quot;product_category&#92;&quot;:&#92;&quot;home&#92;&quot;,&#92;&quot;payment_method&#92;&quot;:&#92;&quot;paypal&#92;&quot;,&#92;&quot;total_orders&#92;&quot;:10,&#92;&quot;gross_revenue&#92;&quot;:3713.5,&#92;&quot;anomalous_orders&#92;&quot;:2}]&quot;' data-total-rows='12' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;order_day&quot;,[&quot;datetime&quot;,&quot;datetime64[us, UTC]&quot;]],[&quot;product_category&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;payment_method&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;total_orders&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;gross_revenue&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;anomalous_orders&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-selection='&quot;multi&quot;' data-show-filters='true' data-show-download='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='true' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "04388c70f278b2e00a6eb3d92d0030a1",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"surveillance-des-anomalies\">\u26a0\ufe0f Surveillance des Anomalies</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "ec1c4d8930615e7ff2dc826b1103995b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"anomalies-detectees\">Anomalies Detectees</h3>\n<ul>\n<li><strong>Total</strong>: 33</li>\n<li><strong>Severity haute</strong>: 11</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "/tmp/marimo_15/__marimo__cell_vblA_.py:18: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.\n  df = pd.read_sql_query(sql, conn)\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "5119de829633f59ebb43d9089526a3fa",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='BYtC-0' random-id='4cad0c29-7bfe-d670-5598-22c1e60bd533'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;_marimo_row_id&#92;&quot;:0,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:41:02.446174+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-776433&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;high&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;high_quantity&#92;&quot;,&#92;&quot;high_order_value&#92;&quot;]},{&#92;&quot;_marimo_row_id&#92;&quot;:1,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:40:48.424041+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-693065&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;medium&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;negative_stock&#92;&quot;]},{&#92;&quot;_marimo_row_id&#92;&quot;:2,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:40:46.421692+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-661240&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;medium&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;negative_stock&#92;&quot;]},{&#92;&quot;_marimo_row_id&#92;&quot;:3,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:40:38.403070+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-388756&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;high&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;high_quantity&#92;&quot;,&#92;&quot;high_order_value&#92;&quot;]},{&#92;&quot;_marimo_row_id&#92;&quot;:4,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:40:10.357585+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-339211&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;medium&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;negative_stock&#92;&quot;]},{&#92;&quot;_marimo_row_id&#92;&quot;:5,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:39:56.327401+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-481130&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;medium&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;high_order_value&#92;&quot;]},{&#92;&quot;_marimo_row_id&#92;&quot;:6,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:39:50.316832+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-896692&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;medium&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;negative_stock&#92;&quot;]},{&#92;&quot;_marimo_row_id&#92;&quot;:7,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:39:48.321050+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-431383&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;high&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;price_spike&#92;&quot;,&#92;&quot;high_order_value&#92;&quot;]},{&#92;&quot;_marimo_row_id&#92;&quot;:8,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:39:34.289517+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-723852&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;medium&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;negative_stock&#92;&quot;]},{&#92;&quot;_marimo_row_id&#92;&quot;:9,&#92;&quot;detected_at&#92;&quot;:&#92;&quot;2026-04-13 14:39:30.282493+00:00&#92;&quot;,&#92;&quot;order_id&#92;&quot;:&#92;&quot;ORD-348431&#92;&quot;,&#92;&quot;severity&#92;&quot;:&#92;&quot;medium&#92;&quot;,&#92;&quot;reasons&#92;&quot;:[&#92;&quot;high_order_value&#92;&quot;]}]&quot;' data-total-rows='33' data-total-columns='4' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;detected_at&quot;,[&quot;datetime&quot;,&quot;datetime64[us, UTC]&quot;]],[&quot;order_id&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;severity&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;reasons&quot;,[&quot;string&quot;,&quot;object&quot;]]]' data-selection='&quot;multi&quot;' data-show-filters='true' data-show-download='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='true' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "2918721830a3b0ffea6e4a67f4e67418",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"sante-des-stocks\">\ud83d\udce6 Sante des Stocks</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "35896bfa5d2ed277907c96b9d57b5bf0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"produits-a-reapprovisionner\">Produits a Reapprovisionner</h3>\n<ul>\n<li><strong>Produits en statut non-sain</strong>: 3</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "/tmp/marimo_15/__marimo__cell_vblA_.py:18: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.\n  df = pd.read_sql_query(sql, conn)\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "emfo",
+      "code_hash": "ae34bd65943569a8b2ecec6fd3901ebd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='emfo-0' random-id='a2fb28e5-fb95-51e1-2ab9-3d2ab4725945'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;_marimo_row_id&#92;&quot;:0,&#92;&quot;snapshot_date&#92;&quot;:&#92;&quot;2026-04-10&#92;&quot;,&#92;&quot;product_id&#92;&quot;:&#92;&quot;P-104&#92;&quot;,&#92;&quot;warehouse_code&#92;&quot;:&#92;&quot;WH-THI&#92;&quot;,&#92;&quot;available_stock&#92;&quot;:7,&#92;&quot;reorder_threshold&#92;&quot;:12,&#92;&quot;stock_status&#92;&quot;:&#92;&quot;reorder&#92;&quot;},{&#92;&quot;_marimo_row_id&#92;&quot;:1,&#92;&quot;snapshot_date&#92;&quot;:&#92;&quot;2026-04-10&#92;&quot;,&#92;&quot;product_id&#92;&quot;:&#92;&quot;P-101&#92;&quot;,&#92;&quot;warehouse_code&#92;&quot;:&#92;&quot;WH-DKR&#92;&quot;,&#92;&quot;available_stock&#92;&quot;:10,&#92;&quot;reorder_threshold&#92;&quot;:12,&#92;&quot;stock_status&#92;&quot;:&#92;&quot;reorder&#92;&quot;},{&#92;&quot;_marimo_row_id&#92;&quot;:2,&#92;&quot;snapshot_date&#92;&quot;:&#92;&quot;2026-04-10&#92;&quot;,&#92;&quot;product_id&#92;&quot;:&#92;&quot;P-103&#92;&quot;,&#92;&quot;warehouse_code&#92;&quot;:&#92;&quot;WH-THI&#92;&quot;,&#92;&quot;available_stock&#92;&quot;:16,&#92;&quot;reorder_threshold&#92;&quot;:18,&#92;&quot;stock_status&#92;&quot;:&#92;&quot;reorder&#92;&quot;}]&quot;' data-total-rows='3' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;snapshot_date&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;product_id&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;warehouse_code&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;available_stock&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;reorder_threshold&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;stock_status&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-selection='&quot;multi&quot;' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='true' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "69e1deb11626f8c4612231ba2871c8e7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"kpis-support-client\">\ud83c\udfab KPIs Support Client</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "f4f56946deda020f4a02d7801259262e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"kpis-support\">KPIs Support</h3>\n<ul>\n<li><strong>Total tickets</strong>: 4</li>\n<li><strong>Tickets urgents</strong>: 2</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "/tmp/marimo_15/__marimo__cell_vblA_.py:18: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.\n  df = pd.read_sql_query(sql, conn)\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "iLit",
+      "code_hash": "d3b5842884bbaeae9712d5ab22c519d1",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='iLit-0' random-id='94fc0a0f-25bc-8ab3-4b1d-11671489bb14'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;_marimo_row_id&#92;&quot;:0,&#92;&quot;opened_date&#92;&quot;:&#92;&quot;2026-04-10&#92;&quot;,&#92;&quot;channel&#92;&quot;:&#92;&quot;email&#92;&quot;,&#92;&quot;total_tickets&#92;&quot;:1,&#92;&quot;urgent_tickets&#92;&quot;:1,&#92;&quot;open_tickets&#92;&quot;:1},{&#92;&quot;_marimo_row_id&#92;&quot;:1,&#92;&quot;opened_date&#92;&quot;:&#92;&quot;2026-04-10&#92;&quot;,&#92;&quot;channel&#92;&quot;:&#92;&quot;phone&#92;&quot;,&#92;&quot;total_tickets&#92;&quot;:1,&#92;&quot;urgent_tickets&#92;&quot;:1,&#92;&quot;open_tickets&#92;&quot;:1},{&#92;&quot;_marimo_row_id&#92;&quot;:2,&#92;&quot;opened_date&#92;&quot;:&#92;&quot;2026-04-10&#92;&quot;,&#92;&quot;channel&#92;&quot;:&#92;&quot;chat&#92;&quot;,&#92;&quot;total_tickets&#92;&quot;:2,&#92;&quot;urgent_tickets&#92;&quot;:0,&#92;&quot;open_tickets&#92;&quot;:0}]&quot;' data-total-rows='3' data-total-columns='5' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;opened_date&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;channel&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;total_tickets&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;urgent_tickets&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;open_tickets&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-selection='&quot;multi&quot;' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='true' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    }
+  ]
+}

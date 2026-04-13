@@ -1,0 +1,6 @@
+delivery_date,supplier_id,product_id,delivered_quantity,delivery_status
+2026-04-10,SUP-01,P-100,50,received
+2026-04-10,SUP-02,P-101,25,in_transit
+2026-04-10,SUP-03,P-103,40,received
+2026-04-10,SUP-04,P-104,10,delayed
+
