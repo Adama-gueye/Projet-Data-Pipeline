@@ -1,204 +1,267 @@
-# Projet Data Pipelines DSIA - Cas e-commerce
+# E-commerce Data Intelligence & Analytics - Projet Exam
 
-Ce dossier contient une proposition complete de rendu pour l'examen Data Pipelines DSIA, basee sur une activite `e-commerce`. L'objectif est de construire une plateforme capable d'ingerer des flux temps reel, d'orchestrer des traitements batch quotidiens, de detecter des anomalies et d'exposer les donnees de facon exploitable.
+## Architecture du Projet
 
-## 1. Objectif du projet
-
-Nous jouons le role de `Data Engineer` dans une entreprise e-commerce. La plateforme doit repondre aux besoins suivants :
-
-- ingerer des commandes en temps reel ;
-- charger des fichiers batch quotidiens ;
-- detecter les anomalies sur le flux temps reel et rediriger les evenements suspects vers un topic dedie ;
-- exposer les donnees dans PostgreSQL et MinIO pour des usages analytiques.
-
-## 2. Sources de donnees
-
-1. `Source temps reel` : flux de commandes e-commerce simule en continu, publie dans Kafka sur le topic `orders_raw`.
-2. `Source batch` : snapshot quotidien des stocks (`daily_inventory.csv`).
-3. `Source batch` : livraisons fournisseurs (`supplier_deliveries.csv`).
-4. `Source batch` : tickets support client (`support_tickets.jsonl`).
-5. `Source reference` : catalogue produits (`products.csv`).
-
-## 3. Architecture
+Ce projet implémente une plateforme d'analyse e-commerce avec **Architecture Medallion** (Bronze/Silver/Gold) sur MinIO.
 
 ```
-                         ┌──────────────────┐
-                         │   Kafka          │
-    Producer ──────────► │  orders_raw      │
-    (Python)             │                  │
-                         │  orders_anomalies│◄──────── Anomaly Consumer
-                         └────────┬─────────┘
-                                  │
-                         ┌────────▼─────────┐     ┌─────────────┐
-                         │  Realtime        │────►│  PostgreSQL │
-                         │  Consumer        │     │ streaming.* │
-                         └──────────────────┘     └─────────────┘
-
-    ┌───────────────────────────────────────────────────────────────┐
-    │                     Airflow DAG                               │
-    │  (ecommerce_batch_pipeline - quotidien a minuit)             │
-    └───────────────────────────────────────────────────────────────┘
-                                  │
-                    ┌─────────────┼─────────────┐
-                    ▼             ▼             ▼
-               ┌────────┐   ┌────────┐   ┌────────┐
-               │ MinIO  │   │ staging │   │analytics│
-               │ raw/   │   │  .*    │   │   .*   │
-               └────────┘   └────────┘   └────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    E-COMMERCE DATA PLATFORM                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐              │
+│   │   CSV/JSON   │   │   Kafka      │   │   Marimo     │              │
+│   │  (Batch)     │   │  (Streaming) │   │ Notebooks    │              │
+│   └──────┬───────┘   └──────┬───────┘   └──────────────┘              │
+│          │                  │                                            │
+│          ▼                  ▼                                            │
+│   ┌─────────────────────────────────────┐                               │
+│   │         AIRFLOW (Orchestration)      │                               │
+│   │   Extract → Load → Bronze → Silver → Gold → Report                  │
+│   └─────────────────┬───────────────────┘                               │
+│                     │                                                   │
+│          ┌──────────┴──────────┐                                        │
+│          ▼                     ▼                                        │
+│   ┌─────────────┐      ┌─────────────┐                                 │
+│   │ PostgreSQL  │      │   MinIO     │                                 │
+│   │ (Analytics) │      │ (Lakehouse) │                                 │
+│   └─────────────┘      │Bronze/Silver│                                 │
+│                        │   /Gold      │                                 │
+│                        └─────────────┘                                 │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
-## 4. Stack technique
+## Services Disponibles
 
-| Composant | Version | Role |
-|-----------|---------|------|
-| Docker Compose | latest | Orchestration de la stack |
-| Kafka + Zookeeper | 7.5.0 | Ingestion temps reel |
-| Kafbat UI | latest | Visualisation Kafka |
-| PostgreSQL | 16-alpine | Entrepot de donnees |
-| MinIO | RELEASE.2025-02 | Object storage / Data lake |
-| Airflow | 2.9 | Orchestration batch |
-| Marimo | 0.23 | Notebooks interactifs |
-| Python | 3.11 | Services, producers, consumers |
+| Service | URL | Identifiants | Description |
+|---------|-----|-------------|-------------|
+| **Airflow** | http://localhost:8081 | airflow/airflow | Orchestration ETL |
+| **Marimo** | http://localhost:7860 | - | Notebooks interactifs |
+| **Kafka UI** | http://localhost:8080 | - | Interface Kafka |
+| **MinIO** | http://localhost:9001 | minioadmin/minioadmin123 | Data Lake |
 
-## 5. Services disponibles
-
-| Service | URL | Compte |
-|---------|-----|--------|
-| Kafbat UI | http://localhost:8090 | - |
-| Marimo Notebooks | http://localhost:3838 | - |
-| Airflow | http://localhost:8080 | airflow / airflow |
-| PostgreSQL | localhost:5432 | de_user / de_password |
-| MinIO API | http://localhost:9000 | minio / minio123 |
-| MinIO Console | http://localhost:9001 | minio / minio123 |
-
-## 6. Demarrage rapide
+## Démarrage Rapide
 
 ```bash
-# Depuis le dossier exam/
-docker compose up --build
+# 1. Se placer dans le dossier exam
+cd exam
+
+# 2. Démarrer tous les services
+docker-compose up -d
+
+# 3. Attendre 2-3 minutes puis vérifier
+docker-compose ps
+
+# 4. Vérifier les logs airflow-init
+docker-compose logs airflow-init
+
+# 5. Accéder à Airflow et déclencher le DAG manuellement
+docker-compose exec airflow-webserver airflow dags trigger ecommerce_batch_pipeline
 ```
 
-Attendre que tous les services soienthealthy (environ 1-2 minutes).
-
-## 7. Arret et nettoyage
-
-```bash
-# Arreter les services
-docker compose down
-
-# Arreter et supprimer les volumes (reinitialisation complete)
-docker compose down -v
-```
-
-## 8. Schemas PostgreSQL
-
-### Schema `streaming`
-- `fact_orders` - Commandes temps reel avec flag anomalie
-- `fact_order_anomalies` - Anomalies detectees avec severite et payload
-
-### Schema `staging`
-- `inventory_snapshot` - Snapshot quotidien des stocks
-- `supplier_deliveries` - Livraisons fournisseurs
-- `support_tickets` - Tickets support client
-
-### Schema `analytics`
-- `daily_inventory_health` - Sante des stocks (healthy/watch/reorder)
-- `daily_support_kpis` - KPIs support par canal et date
-- `v_orders_summary` - Vue resumee des commandes
-- `v_anomaly_monitoring` - Vue surveillance des anomalies
-
-## 9. Regles de detection d'anomalies
-
-| Regle | Condition | Topic Kafka |
-|-------|-----------|-------------|
-| high_quantity | quantity >= 8 | orders_anomalies |
-| price_spike | unit_price >= 2500 | orders_anomalies |
-| negative_stock | stock_after_order < 0 | orders_anomalies |
-| high_order_value | total_amount >= 5000 | orders_anomalies |
-
-## 10. Structure du projet
+## Structure du Projet
 
 ```
 exam/
-|-- airflow/dags/
-|   `-- ecommerce_batch_pipeline.py   # DAG batch quotidien
-|-- data/
-|   |-- batch/                        # Fichiers CSV pour Airflow
-|   |-- reference/                    # Catalogue produits
-|   `-- support/                      # Tickets JSONL
-|-- notebooks/                        # Notebooks Marimo
-|   |-- ecommerce_dashboard.py        # Dashboard central
-|   |-- streaming/realtime_orders.py  # Analyse streaming
-|   |-- analytics/sales_analytics.py  # Analyse analytique
-|   `-- batch/batch_analytics.py      # Analyse batch
-|-- postgres/
-|   `-- init.sql                      # Schema et donnees initiales
-|-- services/
-|   |-- shared/                       # Config et database helper
-|   `-- streaming/
-|       |-- realtime_orders_producer.py   # Producteur Kafka
-|       |-- realtime_orders_consumer.py   # Consommateur + detection
-|       `-- anomaly_consumer.py           # Consommateur anomalies
-|-- sql/
-|   `-- sample_queries.sql            # Requetes analytiques
-|-- docker-compose.yml
-|-- Dockerfile.app                   # Pour producer/consumer/marimo
-|-- Dockerfile.airflow               # Pour Airflow
-|-- requirements.app.txt
-|-- requirements.airflow.txt
-`-- README.md
+├── docker-compose.yml      # Configuration Docker Compose (tous services)
+├── Dockerfile             # Image Airflow personnalisée
+├── requirements.txt       # Dépendances Python
+│
+├── dags/                  # DAGs Airflow
+│   └── ecommerce_batch_pipeline.py   # Pipeline ETL complet
+│
+├── notebooks/             # Notebooks Marimo interactifs
+│   ├── batch_analytics.py           # Analyse données batch
+│   └── realtime_orders.py            # Producer/Consumer Kafka
+│
+├── data/                  # Données sources
+│   ├── batch/
+│   │   ├── daily_inventory.csv      # Inventaire produits
+│   │   └── supplier_deliveries.csv   # Livraisons fournisseurs
+│   └── support/
+│       └── support_tickets.jsonl      # Tickets support client
+│
+├── postgres/
+│   └── init.sql          # Schéma base de données
+│
+└── sql/
+    └── sample_queries.sql # Requêtes SQL analytiques
 ```
 
-## 11. Execution du DAG Airflow
+## Pipeline ETL - Déroulement
 
-Le DAG `ecommerce_batch_pipeline` s'execute automatiquement chaque jour a minuit.
+Le DAG `ecommerce_batch_pipeline` exécute les étapes suivantes :
 
-Pour le declencher manuellement :
-1. Ouvrir http://localhost:8080
-2. Se connecter avec `airflow / airflow`
-3. Cliquer sur le DAG `ecommerce_batch_pipeline`
-4. Cliquer sur "Trigger DAG"
+### Étape 1 : Extraction (Tasks en parallèle)
+```
+extract_inventory   → Lit daily_inventory.csv
+extract_deliveries  → Lit supplier_deliveries.csv
+extract_tickets     → Lit support_tickets.jsonl
+```
+Chaque task push ses données via **XCom** pour les partager.
 
-## 12. Consultation des logs
+### Étape 2 : Chargement PostgreSQL
+```
+load_to_postgres → Pull XCom → Charge dans PostgreSQL
+```
+Les données sont stockées dans les tables :
+- `daily_inventory`
+- `supplier_deliveries`
+- `support_tickets`
+
+### Étape 3 : Architecture Medallion (MinIO)
+
+#### 🥉 Bronze Layer (Données Raw)
+```
+save_to_bronze → Envoie les données brutes vers MinIO
+```
+- `ecommerce-bronze/inventory/date=YYYYMMDD_HHMMSS/inventory.csv`
+- `ecommerce-bronze/deliveries/date=YYYYMMDD_HHMMSS/deliveries.csv`
+- `ecommerce-bronze/tickets/date=YYYYMMDD_HHMMSS/tickets.jsonl`
+
+#### 🥈 Silver Layer (Données Nettoyées)
+```
+save_to_silver → Lit Bronze → Nettoie (dedup, not null) → Envoie vers Silver
+```
+- Supprime doublons
+- Valide champs requis
+- Supprime valeurs nulles
+
+#### 🥇 Gold Layer (Agrégats)
+```
+save_to_gold → Lit PostgreSQL → Crée agrégats → Envoie vers Gold
+```
+- Résumé inventaire (produits en rupture)
+- Performance fournisseurs (délais moyens)
+- Statistiques tickets (par priorité/statut)
+
+### Étape 4 : Rapport Analytique
+```
+generate_report → Lit PostgreSQL → Affiche rapport dans logs
+```
+
+## XCom - Partage de Données entre Tasks
+
+XCom permet aux tasks de partager des données :
+
+```
+Task A (push)                 Task B (pull)
+─────────────                 ─────────────
+df.to_dict()      ──────►     pd.DataFrame(dict)
+```
+
+Dans le code :
+```python
+# Task A - Push
+context["ti"].xcom_push(key="data", value=df.to_dict())
+
+# Task B - Pull
+data = context["ti"].xcom_pull(task_ids="task_a", key="data")
+```
+
+## Architecture Medallion Expliquée
+
+L'architecture Medallion organise les données en couches de qualité croissante :
+
+| Couche | Description | Type de données |
+|--------|-------------|-----------------|
+| **Bronze** | Données brutes, immutable | CSV, JSON, Parquet raw |
+| **Silver** | Données nettoyées, validées | Sans doublons, sans nulls |
+| **Gold** | Agrégats business, prêts BI | Summaries, metrics |
+
+### Pourquoi 3 couches ?
+1. **Traçabilité** : On garde l'historique des données brutes
+2. ** Qualité** : Silver nettoie les problèmes de données
+3. **Performance** : Gold pré-calcule les agrégats pour les dashboards
+
+## Notebooks Marimo
+
+Les notebooks sont accessibles sur **http://localhost:7860**
+
+### batch_analytics.py
+Analyse des données batch du pipeline ETL :
+- Chargement des CSV et JSONL
+- Analyse inventaire (produits en rupture)
+- Performance fournisseurs
+- Statistiques tickets
+
+### realtime_orders.py
+Exercices guidés pour Kafka :
+- Créer un Producer
+- Générer des commandes avec Faker
+- Envoyer vers Kafka
+- Créer un Consumer
+
+## Commandes Utiles
 
 ```bash
-# Logs Airflow
-docker compose logs airflow-webserver
-docker compose logs airflow-scheduler
+# Airflow
+docker-compose exec airflow-webserver airflow dags list
+docker-compose exec airflow-webserver airflow dags trigger ecommerce_batch_pipeline
+docker-compose exec airflow-webserver airflow tasks list ecommerce_batch_pipeline
 
-# Logs Kafka
-docker compose logs kafka
+# PostgreSQL
+docker-compose exec postgres psql -U airflow -d airflow -c "\dt"
 
-# Logs producers/consumers
-docker compose logs realtime-producer
-docker compose logs realtime-consumer
-docker compose logs anomaly-consumer
+# Kafka
+docker-compose exec kafka kafka-topics --bootstrap-server localhost:9092 --list
+docker-compose exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic realtime-orders --from-beginning
 
-# Logs Marimo
-docker compose logs marimo-notebook
+# MinIO (via mc)
+docker-compose exec minio-init mc ls local/
+docker-compose exec minio-init mc ls local/ecommerce-bronze/
+docker-compose exec minio-init mc ls local/ecommerce-gold/
 ```
 
-## 13. Bases de donnees initiales
+## Schéma de la Base PostgreSQL
 
-Le fichier `postgres/init.sql` cree automatiquement :
-- Les schemas `streaming`, `staging`, `analytics`
-- Les tables et vues analytiques
-- Des donnees de demonstration (produits, stocks initiaux)
+### Table daily_inventory
+| Colonne | Type | Description |
+|---------|------|-------------|
+| product_id | VARCHAR(50) | ID produit (PK) |
+| product_name | VARCHAR(255) | Nom du produit |
+| quantity_in_stock | INTEGER | Quantité en stock |
+| warehouse_location | VARCHAR(100) | Entrepôt |
+| reorder_level | INTEGER | Seuil de réappro |
 
-## 14. Points d'attention pour l'evaluation
+### Table supplier_deliveries
+| Colonne | Type | Description |
+|---------|------|-------------|
+| delivery_id | VARCHAR(50) | ID livraison (PK) |
+| supplier_id | VARCHAR(50) | ID fournisseur |
+| supplier_name | VARCHAR(255) | Nom fournisseur |
+| product_id | VARCHAR(50) | ID produit |
+| quantity | INTEGER | Quantité livrée |
+| delivery_days | INTEGER | Jours de livraison |
 
-- **3 sources minimum** : 5 sources implementees (3 batch + 1 streaming + 1 reference)
-- **Kafka** : producer/consumer operationnels
-- **Anomalies** : redirection vers topic dedie `orders_anomalies`
-- **Airflow** : DAG fonctionnel avec upload MinIO et chargement PostgreSQL
-- **PostgreSQL** : schemas separes avec vues analytiques
-- **Documentation** : README complet et code documente
-- **Reproductibilite** : projet entierement containerise
+### Table support_tickets
+| Colonne | Type | Description |
+|---------|------|-------------|
+| ticket_id | VARCHAR(50) | ID ticket (PK) |
+| customer_id | VARCHAR(50) | ID client |
+| subject | VARCHAR(500) | Sujet |
+| status | VARCHAR(50) | open/in_progress/closed |
+| priority | VARCHAR(50) | high/medium/low |
 
-## 15. Axes d'amelioration
+## Dépannage
 
-- Regles d'anomalies basees sur un modele ML plutot que statiques
-- Partitionnement historique des tables batch
-- Integration dbt pour transformations plus poussees
-- Tests unitaires et integration
-- Dashboard BI sur les vues analytiques (Metabase, Superset)
+### Erreur "No such file or directory"
+Les données doivent être mountées. Vérifier que `./data` est bien présent dans les volumes du docker-compose.yml.
+
+### Airflow init bloque
+```bash
+# Vérifier que PostgreSQL est healthy
+docker-compose ps postgres
+
+# Relancer airflow-init
+docker-compose restart airflow-init
+```
+
+### MinIO buckets non créés
+```bash
+# Recréer les buckets manuellement
+docker-compose exec minio-init mc mb local/ecommerce-bronze
+docker-compose exec minio-init mc mb local/ecommerce-silver
+docker-compose exec minio-init mc mb local/ecommerce-gold
+```
+

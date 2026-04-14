@@ -1,0 +1,171 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.1",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "7aa8f2a18f6bb741ef7b9034abcbf300",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "c9feee6639eb104605287e54db762878",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"tp-batch-analyse-des-donnees-e-commerce\">TP Batch - Analyse des Donnees E-commerce</h1>\n<span class=\"paragraph\">Ce notebook analyse les donnees batch du pipeline ETL.</span>\n<h2 id=\"objectifs\">Objectifs</h2>\n<ol>\n<li>Charger les donnees depuis les fichiers CSV</li>\n<li>Analyser l'inventaire</li>\n<li>Analyser les performances fournisseurs</li>\n<li>Analyser les tickets de support</li>\n</ol>\n<h2 id=\"configuration\">Configuration</h2>\n<ul>\n<li>Host: postgres</li>\n<li>Database: airflow</li>\n<li>Data Path: /opt/airflow/data/external</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "fd56aed64ec935487969e94a1baf1331",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Inventory: 10 produits\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "b270d984b1d23fb2b21c2a5b96ab4a80",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Deliveries: 8 enregistrements\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "eaa7ee0f257780ac1f02a73f5a82cebd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Tickets: 5 enregistrements\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "PKri",
+      "code_hash": "30a6103539eca5aac16809d638cd6415",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"exercice-2-analyse-de-linventaire\">Exercice 2 : Analyse de l'Inventaire</h2>\n<span class=\"paragraph\">Identifiez les produits en rupture de stock.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "f9c71d6b1832288f6d920f38a0845136",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "5df8aea8f2e994417776ae202262d2e9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"exercice-3-performance-des-fournisseurs\">Exercice 3 : Performance des Fournisseurs</h2>\n<span class=\"paragraph\">Analysez les delais de livraison par fournisseur.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "9d0c0c463e5719c2d924fb919753c204",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "37ea0625b9f2063502ef501bb00c9fbe",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"exercice-4-analyse-des-tickets\">Exercice 4 : Analyse des Tickets</h2>\n<span class=\"paragraph\">Analysez les tickets par statut et priorite.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "43f8c9f7597459b4c47616e8fcb6b5c5",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "7dbebbe0eff6d592fa2915c134b59058",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "fb16ebadc6362e23742e32441798e41a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"commandes-utiles\">Commandes Utiles</h2>\n<div class=\"language-bash codehilite\"><pre><span></span><code><span class=\"c1\"># Executer le DAG Airflow manuellement</span>\ndocker-compose<span class=\"w\"> </span><span class=\"nb\">exec</span><span class=\"w\"> </span>airflow-webserver<span class=\"w\"> </span>airflow<span class=\"w\"> </span>dags<span class=\"w\"> </span>trigger<span class=\"w\"> </span>ecommerce_batch_pipeline\n\n<span class=\"c1\"># Verifier les tables dans PostgreSQL</span>\ndocker-compose<span class=\"w\"> </span><span class=\"nb\">exec</span><span class=\"w\"> </span>postgres<span class=\"w\"> </span>psql<span class=\"w\"> </span>-U<span class=\"w\"> </span>airflow<span class=\"w\"> </span>-d<span class=\"w\"> </span>airflow<span class=\"w\"> </span>-c<span class=\"w\"> </span><span class=\"s2\">&quot;\\dt&quot;</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}

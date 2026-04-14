@@ -1,7 +1,11 @@
-snapshot_date,product_id,warehouse_code,stock_on_hand,reserved_stock,reorder_threshold
-2026-04-10,P-100,WH-DKR,42,10,20
-2026-04-10,P-101,WH-DKR,15,5,12
-2026-04-10,P-102,WH-DKR,180,22,45
-2026-04-10,P-103,WH-THI,24,8,18
-2026-04-10,P-104,WH-THI,11,4,12
-
+product_id,product_name,quantity_in_stock,warehouse_location,last_restock_date,reorder_level
+PROD001,Wireless Headphones,45,WAREHOUSE-A,2024-03-01,20
+PROD002,USB-C Cable,8,WAREHOUSE-B,2024-03-05,15
+PROD003,Laptop Stand,32,WAREHOUSE-A,2024-03-02,10
+PROD004,Mechanical Keyboard,5,WAREHOUSE-C,2024-03-03,12
+PROD005,Mouse Pad XL,67,WAREHOUSE-B,2024-03-01,25
+PROD006,Webcam HD,12,WAREHOUSE-A,2024-03-04,10
+PROD007,Monitor Light Bar,3,WAREHOUSE-C,2024-03-05,8
+PROD008,Desk Organizer,28,WAREHOUSE-B,2024-03-02,15
+PROD009,Cable Management Kit,52,WAREHOUSE-A,2024-03-03,20
+PROD010,Ergonomic Mouse,9,WAREHOUSE-C,2024-03-04,10

@@ -1,6 +1,9 @@
-delivery_date,supplier_id,product_id,delivered_quantity,delivery_status
-2026-04-10,SUP-01,P-100,50,received
-2026-04-10,SUP-02,P-101,25,in_transit
-2026-04-10,SUP-03,P-103,40,received
-2026-04-10,SUP-04,P-104,10,delayed
-
+delivery_id,supplier_id,supplier_name,product_id,quantity,order_date,delivery_date,delivery_days,status
+DEL001,SUP001,TechSupply Co,PROD001,100,2024-02-25,2024-02-28,3,delivered
+DEL002,SUP001,TechSupply Co,PROD002,200,2024-02-26,2024-03-01,4,delivered
+DEL003,SUP002,Global Parts Inc,PROD003,50,2024-02-27,2024-03-02,4,delivered
+DEL004,SUP002,Global Parts Inc,PROD004,75,2024-02-28,2024-03-03,4,delivered
+DEL005,SUP003,QuickShip Ltd,PROD005,150,2024-03-01,2024-03-05,4,delivered
+DEL006,SUP003,QuickShip Ltd,PROD006,60,2024-03-02,2024-03-06,4,delivered
+DEL007,SUP001,TechSupply Co,PROD007,80,2024-03-03,2024-03-06,3,delivered
+DEL008,SUP004,Express Ware,PROD008,45,2024-03-04,2024-03-07,3,delivered

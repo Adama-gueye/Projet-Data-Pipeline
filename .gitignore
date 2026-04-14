@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
+*.pyo
+*.log
 .env
-logs/*
-
+airflow.db
+*.egg-info/

@@ -1,5 +1,5 @@
-{"ticket_id":"T-1001","opened_at":"2026-04-10T08:15:00+00:00","customer_id":"CUST-1201","channel":"email","category":"delivery_delay","priority":"high","status":"open"}
-{"ticket_id":"T-1002","opened_at":"2026-04-10T09:40:00+00:00","customer_id":"CUST-1202","channel":"chat","category":"refund","priority":"medium","status":"resolved"}
-{"ticket_id":"T-1003","opened_at":"2026-04-10T11:05:00+00:00","customer_id":"CUST-1203","channel":"phone","category":"payment_issue","priority":"critical","status":"open"}
-{"ticket_id":"T-1004","opened_at":"2026-04-10T13:20:00+00:00","customer_id":"CUST-1204","channel":"chat","category":"account_access","priority":"low","status":"resolved"}
-
+{"ticket_id":"TKT001","customer_id":"CUST001","subject":"Order not received","status":"open","priority":"high","created_at":"2024-03-10T09:15:00Z"}
+{"ticket_id":"TKT002","customer_id":"CUST002","subject":"Wrong item delivered","status":"in_progress","priority":"medium","created_at":"2024-03-10T10:30:00Z"}
+{"ticket_id":"TKT003","customer_id":"CUST003","subject":"Refund request","status":"open","priority":"high","created_at":"2024-03-10T11:45:00Z"}
+{"ticket_id":"TKT004","customer_id":"CUST004","subject":"Product inquiry","status":"closed","priority":"low","created_at":"2024-03-09T14:20:00Z"}
+{"ticket_id":"TKT005","customer_id":"CUST005","subject":"Shipping delay","status":"in_progress","priority":"medium","created_at":"2024-03-10T08:00:00Z"}
