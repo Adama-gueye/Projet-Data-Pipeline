@@ -171,7 +171,7 @@ L'architecture Medallion organise les données en couches de qualité croissante
 
 ### Pourquoi 3 couches ?
 1. **Traçabilité** : On garde l'historique des données brutes
-2. ** Qualité** : Silver nettoie les problèmes de données
+2. **Qualité** : Silver nettoie les problèmes de données
 3. **Performance** : Gold pré-calcule les agrégats pour les dashboards
 
 ## Notebooks Marimo
