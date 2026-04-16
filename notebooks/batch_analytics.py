@@ -12,7 +12,7 @@ def _():
     import json
 
     DATA_PATH = "/opt/airflow/data/external"
-    return mo, pd, json, DATA_PATH
+    return DATA_PATH, json, mo, pd
 
 
 @app.cell(hide_code=True)
@@ -37,7 +37,7 @@ def _(mo):
 
 
 @app.cell
-def _(pd, DATA_PATH):
+def _(DATA_PATH, pd):
     # Charger inventory
     inventory = pd.read_csv(f"{DATA_PATH}/batch/daily_inventory.csv")
     print(f"Inventory: {len(inventory)} produits")
@@ -45,7 +45,7 @@ def _(pd, DATA_PATH):
 
 
 @app.cell
-def _(pd, DATA_PATH):
+def _(DATA_PATH, pd):
     # Charger deliveries
     deliveries = pd.read_csv(f"{DATA_PATH}/batch/supplier_deliveries.csv")
     print(f"Deliveries: {len(deliveries)} enregistrements")
@@ -53,7 +53,7 @@ def _(pd, DATA_PATH):
 
 
 @app.cell
-def _(json, DATA_PATH):
+def _(DATA_PATH, json, pd):
     # Charger tickets
     tickets_list = []
     with open(f"{DATA_PATH}/support/support_tickets.jsonl", "r") as f:
@@ -79,7 +79,7 @@ def _(mo):
 def _(inventory):
     low_stock = inventory[inventory["quantity_in_stock"] < inventory["reorder_level"]]
     print(f"PRODUITS EN RUPTURE ({len(low_stock)}):")
-    return (low_stock,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -101,7 +101,7 @@ def _(deliveries):
     }).round(2)
     supplier_stats.columns = ["avg_delivery", "min_delivery", "max_delivery", "total_quantity"]
     print("PERFORMANCE FOURNISSEURS:")
-    return (supplier_stats,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -119,14 +119,14 @@ def _(mo):
 def _(tickets):
     by_status = tickets.groupby("status").size()
     print("TICKETS PAR STATUT:")
-    return (by_status,)
+    return
 
 
 @app.cell
 def _(tickets):
     by_priority = tickets.groupby("priority").size()
     print("TICKETS PAR PRIORITE:")
-    return (by_priority,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -136,13 +136,18 @@ def _(mo):
     ## Commandes Utiles
 
     ```bash
-    # Executer le DAG Airflow manuellement
+    # Executer le DAG Airflow manuellement, chque exécution le dag va se relancer
     docker-compose exec airflow-webserver airflow dags trigger ecommerce_batch_pipeline
 
     # Verifier les tables dans PostgreSQL
-    docker-compose exec postgres psql -U airflow -d airflow -c "\\dt"
+    docker-compose exec postgres psql -U airflow -d airflow -c "\dt"
     ```
     """)
+    return
+
+
+@app.cell
+def _():
     return
 
 

@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
@@ -10,7 +10,8 @@ def _():
     import json
     from confluent_kafka import Producer, Consumer
     from faker import Faker
-    return mo, Faker
+
+    return Consumer, Faker, Producer, json, mo
 
 
 @app.cell(hide_code=True)
@@ -28,6 +29,7 @@ def _(mo):
     - Broker: kafka:9092
     - Topic: realtime-orders
     """)
+    return
 
 
 @app.cell
@@ -45,10 +47,11 @@ def _(mo):
 
     Utilisez Faker pour generer une fausse commande e-commerce.
     """)
+    return
 
 
 @app.cell
-def _(Faker):
+def _(Faker, json):
     def generate_order():
         fake = Faker()
         order = {
@@ -66,7 +69,7 @@ def _(Faker):
     sample = generate_order()
     print("Exemple de commande:")
     print(json.dumps(sample, indent=2))
-    return generate_order
+    return (generate_order,)
 
 
 @app.cell(hide_code=True)
@@ -77,10 +80,11 @@ def _(mo):
 
     Creez un producer Kafka avec confluent-kafka.
     """)
+    return
 
 
 @app.cell
-def _(Faker, generate_order):
+def _(BOOTSTRAP_SERVERS, ORDERS_TOPIC, Producer, generate_order, json):
     producer = Producer({
         "bootstrap.servers": BOOTSTRAP_SERVERS,
         "client.id": "ecommerce-producer"
@@ -106,7 +110,7 @@ def _(Faker, generate_order):
     test_order = generate_order()
     print(f"Envoi de la commande {test_order['order_id']}...")
     send_order(test_order)
-    return send_order
+    return
 
 
 @app.cell(hide_code=True)
@@ -117,10 +121,11 @@ def _(mo):
 
     Creez un consumer pour lire les commandes du topic.
     """)
+    return
 
 
 @app.cell
-def _():
+def _(BOOTSTRAP_SERVERS, Consumer, ORDERS_TOPIC):
     consumer = Consumer({
         "bootstrap.servers": BOOTSTRAP_SERVERS,
         "group.id": "ecommerce-consumer",
@@ -129,7 +134,7 @@ def _():
     })
     consumer.subscribe([ORDERS_TOPIC])
     print(f"Consumer subscribe au topic: {ORDERS_TOPIC}")
-    return consumer
+    return
 
 
 @app.cell(hide_code=True)
@@ -146,6 +151,12 @@ def _(mo):
     docker-compose exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic realtime-orders --from-beginning --max-messages 5
     ```
     """)
+    return
+
+
+@app.cell
+def _():
+    return
 
 
 if __name__ == "__main__":

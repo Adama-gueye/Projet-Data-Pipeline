@@ -7,60 +7,157 @@
   "cells": [
     {
       "id": "Hbol",
-      "code_hash": null,
-      "outputs": [],
+      "code_hash": "05db219043f8676d38809f727ce5d6c9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "MJUe",
-      "code_hash": null,
-      "outputs": [],
+      "code_hash": "47dfb33744fe3ba7cec80cda5e4ffe50",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"tp-streaming-kafka-producer-consumer-e-commerce-orders\">TP Streaming - Kafka Producer &amp; Consumer - E-commerce Orders</h1>\n<span class=\"paragraph\">Ce notebook permet de produire et consommer des commandes e-commerce en temps reel.</span>\n<h2 id=\"objectifs\">Objectifs</h2>\n<ol>\n<li>Creer un producer Kafka pour envoyer des commandes</li>\n<li>Creer un consumer pour recevoir les commandes</li>\n</ol>\n<h2 id=\"configuration\">Configuration</h2>\n<ul>\n<li>Broker: kafka:9092</li>\n<li>Topic: realtime-orders</li>\n</ul></span>"
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "vblA",
-      "code_hash": null,
-      "outputs": [],
+      "code_hash": "146f3501f421217fc8752d89124e6d97",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "bkHC",
-      "code_hash": null,
-      "outputs": [],
+      "code_hash": "291caff9aa1487211e2daa396e69ae73",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"exercice-1-generer-une-commande\">Exercice 1 : Generer une Commande</h2>\n<span class=\"paragraph\">Utilisez Faker pour generer une fausse commande e-commerce.</span></span>"
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "lEQa",
-      "code_hash": null,
-      "outputs": [],
-      "console": []
+      "code_hash": "2194de95f6676eecaeaac9ae91cb3c3a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Exemple de commande:\n{\n  \"order_id\": \"cdfca1af-9e3c-4db1-aa57-21d2ffec5c81\",\n  \"customer_id\": \"CUST88282\",\n  \"customer_name\": \"Dillon Butler\",\n  \"product\": \"Quality-focused motivating orchestration\",\n  \"quantity\": 5,\n  \"price\": 66.63,\n  \"timestamp\": \"2026-03-03T16:09:54.265849\",\n  \"total\": 333.15\n}\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "PKri",
-      "code_hash": null,
-      "outputs": [],
+      "code_hash": "e97e8ce8478901cb592aa90694048399",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"exercice-2-creer-le-producer\">Exercice 2 : Creer le Producer</h2>\n<span class=\"paragraph\">Creez un producer Kafka avec confluent-kafka.</span></span>"
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "Xref",
-      "code_hash": null,
-      "outputs": [],
-      "console": []
+      "code_hash": "7eac1298840a13994349a2528ed2eb98",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Envoi de la commande 2f22ad05-048f-46c2-88b1-a4fe3fa9bcf4...\nLivre a realtime-orders [0] @ 0\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "SFPL",
-      "code_hash": null,
-      "outputs": [],
+      "code_hash": "b64d9d1f3c76d7369be61fcacfe35dc9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"exercice-3-creer-le-consumer\">Exercice 3 : Creer le Consumer</h2>\n<span class=\"paragraph\">Creez un consumer pour lire les commandes du topic.</span></span>"
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "BYtC",
-      "code_hash": null,
-      "outputs": [],
-      "console": []
+      "code_hash": "f65dcebbf0610fdf139acf96ae83720e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Consumer subscribe au topic: realtime-orders\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "RGSE",
+      "code_hash": "9d2d183d2fc71bc6ea4a7fbb9d3f4e06",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"commandes-utiles\">Commandes Utiles</h2>\n<div class=\"language-bash codehilite\"><pre><span></span><code><span class=\"c1\"># Voir les topics</span>\ndocker-compose<span class=\"w\"> </span><span class=\"nb\">exec</span><span class=\"w\"> </span>kafka<span class=\"w\"> </span>kafka-topics<span class=\"w\"> </span>--bootstrap-server<span class=\"w\"> </span>localhost:9092<span class=\"w\"> </span>--list\n\n<span class=\"c1\"># Voir les messages</span>\ndocker-compose<span class=\"w\"> </span><span class=\"nb\">exec</span><span class=\"w\"> </span>kafka<span class=\"w\"> </span>kafka-console-consumer<span class=\"w\"> </span>--bootstrap-server<span class=\"w\"> </span>localhost:9092<span class=\"w\"> </span>--topic<span class=\"w\"> </span>realtime-orders<span class=\"w\"> </span>--from-beginning<span class=\"w\"> </span>--max-messages<span class=\"w\"> </span><span class=\"m\">5</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ppBs",
       "code_hash": null,
       "outputs": [],
       "console": []
